@@ -1,0 +1,58 @@
+plugins {
+    id 'java'
+    id 'io.qameta.allure' version '2.11.2'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+dependencies {
+    // Selenide
+    testImplementation 'com.codeborne:selenide:7.0.4'
+    
+    // TestNG
+    testImplementation 'org.testng:testng:7.8.0'
+    
+    // Allure TestNG
+    testImplementation 'io.qameta.allure:allure-testng:2.24.0'
+    
+    // Allure Selenide integration
+    testImplementation 'io.qameta.allure:allure-selenide:2.24.0'
+    
+    // SLF4J (for logging)
+    testImplementation 'org.slf4j:slf4j-simple:2.0.9'
+}
+
+allure {
+    version = '2.24.0'
+    autoconfigure = true
+    aspectjweaver = true
+    useTestNG {
+        version = '2.24.0'
+    }
+}
+
+test {
+    useTestNG() {
+        useDefaultListeners = true
+        suites 'src/test/resources/testng.xml'
+    }
+    
+    testLogging {
+        events "passed", "skipped", "failed"
+        exceptionFormat "full"
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
