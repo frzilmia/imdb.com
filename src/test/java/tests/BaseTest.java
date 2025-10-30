@@ -3,6 +3,7 @@ package tests;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
@@ -22,20 +23,24 @@ public class BaseTest {
         Configuration.timeout = 10000;
         Configuration.pageLoadTimeout = 30000;
         
-        // Additional Chrome options for CI
+        // Set Chrome options for CI using proper W3C capabilities
         if (isCI) {
-            Configuration.browserCapabilities.setCapability("chrome.switches", new String[]{
+            ChromeOptions chromeOptions = new ChromeOptions();
+            chromeOptions.addArguments(
                 "--no-sandbox",
                 "--disable-dev-shm-usage",
                 "--disable-gpu",
                 "--disable-extensions",
                 "--disable-plugins",
                 "--disable-images",
-                "--disable-javascript-harmony-shipping",
                 "--disable-background-timer-throttling",
                 "--disable-renderer-backgrounding",
-                "--disable-backgrounding-occluded-windows"
-            });
+                "--disable-backgrounding-occluded-windows",
+                "--disable-web-security",
+                "--allow-running-insecure-content",
+                "--disable-features=VizDisplayCompositor"
+            );
+            Configuration.browserCapabilities = chromeOptions;
         }
         
         // Add Allure listener to Selenide
