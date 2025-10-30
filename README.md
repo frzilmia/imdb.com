@@ -63,6 +63,63 @@ imdb.com/
 .\run-tests.bat
 ```
 
+## GitHub Actions CI/CD
+
+### ✅ Major GitHub Actions Improvements Applied!
+
+This project includes a comprehensive GitHub Actions workflow that automatically runs tests on every push and pull request. The workflow has been optimized for reliability and provides detailed error reporting.
+
+#### **Key Improvements Made:**
+
+**1. Enhanced Chrome Configuration:**
+- Proper W3C WebDriver standards compliance
+- Optimized headless mode for CI environments
+- Memory optimization and stability flags
+- Remote debugging capabilities
+
+**2. Improved Test Reliability:**
+- Increased timeouts for CI environments (15s page load, 10s element wait)
+- Duration-based timeouts instead of hard-coded sleeps
+- Better error handling with `continue-on-error` for debugging
+- Simplified test logic to reduce complexity
+
+**3. Better Error Reporting:**
+- Detailed test failure information extraction
+- XML result parsing to show actual failure causes
+- Enhanced logging and stack traces
+- Flexible artifact collection with comprehensive reporting
+
+**4. CI Environment Optimization:**
+- Java 17 environment setup matching project requirements
+- Xvfb virtual display for headless testing
+- Chrome and ChromeDriver automatic installation
+- Gradle caching for faster builds
+
+#### **Workflow Features:**
+- **Triggers**: Push to master/main, Pull requests, Manual dispatch
+- **Environment**: Ubuntu Latest with Java 17
+- **Browser**: Chrome (headless mode in CI)
+- **Reporting**: Allure reports with 30-day retention
+- **Artifacts**: Test results, screenshots on failure, detailed logs
+
+#### **Monitor Your Workflow:**
+Access your automated test results and reports at:
+**🔗 [GitHub Actions Dashboard](https://github.com/frzilmia/imdb.com/actions)**
+
+**Available Artifacts After Each Run:**
+- 📊 **Allure Report** - Comprehensive test reporting with steps and screenshots
+- 📋 **Test Results** - Detailed XML and HTML test reports
+- 📸 **Screenshots** - Captured on test failures (7-day retention)
+- 📝 **Build Logs** - Complete execution logs with stack traces
+
+#### **Workflow Status:**
+- ✅ **Chrome Capabilities**: W3C compliant, no deprecated warnings
+- ✅ **Test Execution**: Simplified logic for better CI reliability
+- ✅ **Error Reporting**: Detailed failure analysis and debugging info
+- ✅ **Artifact Generation**: Comprehensive reporting and evidence collection
+
+The workflow runs automatically on code changes and provides immediate feedback on test results, making it easy to catch issues early in the development process.
+
 ## Technologies Used
 
 - **Java 17**: Programming language
