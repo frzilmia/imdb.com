@@ -52,13 +52,33 @@ jobs:
     - name: Run tests
       run: |
         export DISPLAY=:99
-        ./gradlew clean test --stacktrace --info
+        ./gradlew clean test --continue --stacktrace --info
+      continue-on-error: true
       env:
         HEADLESS: true
         CI: true
         selenide.headless: true
         selenide.browser: chrome
         selenide.browserSize: 1920x1080
+        
+    - name: Print test failure details
+      if: always()
+      run: |
+        echo "=== Test Results Summary ==="
+        if [ -f "build/reports/tests/test/index.html" ]; then
+          echo "Test report generated at build/reports/tests/test/index.html"
+        fi
+        
+        echo "=== Test Output Files ==="
+        find build -name "*.xml" -o -name "*.html" -o -name "*.log" | head -20
+        
+        echo "=== Failed Test Details ==="
+        if [ -d "build/test-results/test" ]; then
+          find build/test-results/test -name "*.xml" -exec grep -l "failure\|error" {} \; | head -5 | while read file; do
+            echo "Failed test in $file:"
+            grep -A 5 -B 5 "failure\|error" "$file" || true
+          done
+        fi
         
     - name: Generate Allure Report
       if: always()

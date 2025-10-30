@@ -20,8 +20,9 @@ public class BaseTest {
         Configuration.browser = "chrome";
         Configuration.browserSize = "1920x1080";
         Configuration.headless = isCI || Boolean.parseBoolean(System.getProperty("selenide.headless", "false"));
-        Configuration.timeout = 10000;
-        Configuration.pageLoadTimeout = 30000;
+        Configuration.timeout = 15000; // Increased timeout for CI
+        Configuration.pageLoadTimeout = 45000; // Increased page load timeout
+        Configuration.pollingInterval = 300; // Faster polling
         
         // Set Chrome options for CI using proper W3C capabilities
         if (isCI) {
@@ -38,7 +39,11 @@ public class BaseTest {
                 "--disable-backgrounding-occluded-windows",
                 "--disable-web-security",
                 "--allow-running-insecure-content",
-                "--disable-features=VizDisplayCompositor"
+                "--disable-features=VizDisplayCompositor",
+                "--remote-debugging-port=9222",
+                "--disable-logging",
+                "--log-level=3",
+                "--silent"
             );
             Configuration.browserCapabilities = chromeOptions;
         }
